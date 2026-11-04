@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        APP_URL  = credentials('app_url')
+        APP_LATI = credentials('app_lati')
+        APP_LON  = credentials('app_lon')
+    }
+
     stages {
         stage('Preparar Entorno') {
             steps {
@@ -20,14 +26,12 @@ pipeline {
         stage('Ejecutar Pruebas (CI)') {
             steps {
                 echo 'Validando sintaxis y ejecución del proyecto...'
-                // Solución definitiva para evitar errores de comillas en el shell:
                 sh './.venv/bin/python3 -c \'import main; print("Pruebas de CI superadas con éxito")\''
             }
         }
 
         stage('Aprobación de Deploy (CD)') {
             steps {
-                // El pipeline se detiene aquí hasta que alguien entre a Jenkins y dé clic en "Proceed"
                 timeout(time: 1, unit: 'HOURS') {
                     input message: '¿Deseas aprobar el despliegue a producción de esta versión?',
                           ok: 'Aprobar y Deployar'
@@ -38,18 +42,13 @@ pipeline {
         stage('Desplegar (Deploy)') {
             steps {
                 echo '¡Aprobación concedida! Ejecutando pasos de despliegue...'
-                // Aquí pondrías los comandos reales para actualizar tu servidor o contenedor
                 sh 'echo "Simulando deploy exitoso del backend de clima."'
             }
         }
     }
 
     post {
-        success {
-            echo '¡Pipeline de CI/CD completado y desplegado exitosamente!'
-        }
-        failure {
-            echo '¡El Pipeline falló o fue rechazado en la aprobación!'
-        }
+        success { echo '¡Pipeline de CI/CD completado y desplegado exitosamente!' }
+        failure { echo '¡El Pipeline falló o fue rechazado en la aprobación!' }
     }
 }
