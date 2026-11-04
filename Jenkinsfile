@@ -20,7 +20,8 @@ pipeline {
         stage('Ejecutar Pruebas (CI)') {
             steps {
                 echo 'Validando sintaxis y ejecución del proyecto...'
-                sh './.venv/bin/python3 -c "import main; print("\"Pruebas de CI superadas con éxito\")"'
+                // Solución definitiva para evitar errores de comillas en el shell:
+                sh './.venv/bin/python3 -c \'import main; print("Pruebas de CI superadas con éxito")\''
             }
         }
 
@@ -36,7 +37,7 @@ pipeline {
 
         stage('Desplegar (Deploy)') {
             steps {
-                echo 'Aprobación concedida! Ejecutando pasos de despliegue...'
+                echo '¡Aprobación concedida! Ejecutando pasos de despliegue...'
                 // Aquí pondrías los comandos reales para actualizar tu servidor o contenedor
                 sh 'echo "Simulando deploy exitoso del backend de clima."'
             }
@@ -45,10 +46,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline de CI/CD completado y desplegado exitosamente!'
+            echo '¡Pipeline de CI/CD completado y desplegado exitosamente!'
         }
         failure {
-            echo 'El Pipeline falló o fue rechazado en la aprobación!'
+            echo '¡El Pipeline falló o fue rechazado en la aprobación!'
         }
     }
 }
