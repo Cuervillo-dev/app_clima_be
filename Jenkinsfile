@@ -4,7 +4,7 @@ pipeline {
     environment {
         APP_URL  = credentials('app_url')
         APP_LATI = credentials('app_lati')
-        APP_LON  = credentials('app_lon')
+        APP_LON  = credentials('lon')
     }
 
     stages {
