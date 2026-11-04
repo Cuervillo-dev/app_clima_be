@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        APP_URL  = credentials('app_url')
-        APP_LATI = credentials('app_lati')
-        APP_LON  = credentials('lon')
-    }
+  environment {
+    API_WEATHER_URL   = credentials('app_url')
+    DEFAULT_LATITUDE  = credentials('app_lati')
+    DEFAULT_LONGITUDE = credentials('app_lon')
+}
 
     stages {
         stage('Preparar Entorno') {
