@@ -20,7 +20,7 @@ pipeline {
         stage('Ejecutar Pruebas (CI)') {
             steps {
                 echo 'Validando sintaxis y ejecución del proyecto...'
-                sh './.venv/bin/python3 -c "import main; print(\"¡Pruebas de CI superadas con éxito!\")"'
+                sh './.venv/bin/python3 -c "import main; print(\"Pruebas de CI superadas con éxito\")"'
             }
         }
 
